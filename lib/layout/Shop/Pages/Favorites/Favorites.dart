@@ -26,23 +26,29 @@ class Favorites extends StatelessWidget {
           builder: (context, state) {
             return Directionality(
               textDirection: TextDirection.rtl,
-              child: ShopCubit.get(context).favoritsModel == null ||
-                      ShopCubit.get(context).homeModel == null
-                  ? Center(child: CircularProgressIndicator())
-                  : ShopCubit.get(context)
+              child: ConditionalBuilder(
+                condition: ShopCubit.get(context).favoritsModel != null &&
+                    ShopCubit.get(context).homeModel != null,
+                builder: ((context) {
+                  return ConditionalBuilder(
+                      condition: ShopCubit.get(context)
                           .favoritsModel!
                           .data!
                           .dataProduct!
-                          .isEmpty
-                      ? Center(
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            EmojiIcon(emojiType: EMOJI_TYPE.ANGRY),
-                            Text("السلة فاضية اخلص اشتري حاجه"),
-                          ],
-                        ))
-                      : Container(
+                          .isNotEmpty,
+                      fallback: (context) => Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              EmojiIcon(emojiType: EMOJI_TYPE.ANGRY),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(" ايه يابطل مفيش حاجه عجباك"),
+                            ],
+                          )),
+                      builder: (context) {
+                        return Container(
                           padding: EdgeInsets.all(10),
                           child: ListView.separated(
                               itemBuilder: (context, index) {
@@ -65,7 +71,13 @@ class Favorites extends StatelessWidget {
                                   .data!
                                   .dataProduct!
                                   .length),
-                        ),
+                        );
+                      });
+                }),
+                fallback: (context) => Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             );
           }),
     );

@@ -11,7 +11,6 @@ import 'package:simple_connection_checker/simple_connection_checker.dart';
 
 import '../../../shared/remote/endpoint.dart';
 import '../../components/components.dart';
-import '../../model/ProfileModel.dart';
 
 class ShopLoginCubit extends Cubit<ShopLoginState> {
   ShopLoginCubit() : super(ShopLoginInitialState());
@@ -34,8 +33,6 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
       data: {'email': email, 'password': password},
     ).then((value) {
       LoginModel = ShopLoginModel.fromJson(value.data);
-      emit(ShopLoginSuccessState(LoginModel));
-      ShopLoginCubit()..getProfileData();
       ShopCubit()
         ..getHomeData()
         ..GetProductDetils()
@@ -44,6 +41,7 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
         ..getCartItem()
         ..getAddressData()
         ..GetOrderData();
+      emit(ShopLoginSuccessState(LoginModel));
     }).catchError((Erorr) {
       print(Erorr.toString());
       emit(ShopLoginErorrState(Erorr.toString()));
@@ -64,18 +62,5 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
     }
 
     emit(ShopLoginChangeOserctorAndIconState());
-  }
-
-  DataProfileModel? profileData;
-  void getProfileData() {
-    emit(ShopUserDataProfileLoadingDataState());
-    DioHelper.getData(url: PROFILE, token: token).then((value) {
-      profileData = DataProfileModel.fromJson(value!.data);
-      print(profileData!.data);
-      emit(ShopUserDataProfileSuccessDataState(profileData));
-    }).catchError((onError) {
-      print(onError);
-      emit(ShopUserDataProfileErorrDataState());
-    });
   }
 }

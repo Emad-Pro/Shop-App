@@ -22,11 +22,15 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<ShopLoginCubit, ShopLoginState>(
       listener: (context, state) {
         if (state is ShopLoginSuccessState) {
+          ShopCubit()
+            ..getHomeData()
+            ..GetProductDetils();
           if (state.LoginModel!.Status!.toString() == "true") {
             CacheHelper.saveData(
                     key: "token", value: state.LoginModel!.data!.token)
                 .then((value) {
               token = state.LoginModel!.data!.token;
+
               NavigateToCantBack(context, ShopLayout());
             });
           } else {

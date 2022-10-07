@@ -1,7 +1,5 @@
 import 'package:my_app_shop/model/login_model.dart';
 
-import '../../model/ProfileModel.dart';
-
 abstract class ShopLoginState {}
 
 class ShopLoginInitialState extends ShopLoginState {}
@@ -23,11 +21,5 @@ class ShopLoginChangeOserctorAndIconState extends ShopLoginState {}
 class ShopLoginCheckInternet extends ShopLoginState {}
 
 class ShopUserDataProfileLoadingDataState extends ShopLoginState {}
-
-class ShopUserDataProfileSuccessDataState extends ShopLoginState {
-  final DataProfileModel? profileData;
-
-  ShopUserDataProfileSuccessDataState(this.profileData);
-}
 
 class ShopUserDataProfileErorrDataState extends ShopLoginState {}

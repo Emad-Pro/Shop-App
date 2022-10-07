@@ -56,9 +56,7 @@ class Main extends StatelessWidget {
       child: MultiBlocProvider(providers: [
         BlocProvider(create: (context) => OnboardingShopAppCubit()),
         BlocProvider(
-            create: (context) => ShopLoginCubit()
-              ..InterNetConniction()
-              ..getProfileData()),
+            create: (context) => ShopLoginCubit()..InterNetConniction()),
         BlocProvider(
             create: (context) => ShopCubit()
               ..getHomeData()

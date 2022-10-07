@@ -19,27 +19,32 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, Shopstates>(
-        builder: (context, state) {
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: ConditionalBuilder(
-                condition: ShopCubit.get(context).homeModel != null &&
-                    ShopCubit.get(context).catigoresModel != null,
-                fallback: (context) {
-                  return Center(child: CircularProgressIndicator());
-                },
-                builder: (context) {
-                  return ProductBuilder(ShopCubit.get(context).homeModel!,
-                      ShopCubit.get(context).catigoresModel!, context, state);
-                },
+    return BlocProvider(
+      create: (context) => ShopCubit()
+        ..getHomeData()
+        ..getCatigoresData(),
+      child: BlocConsumer<ShopCubit, Shopstates>(
+          builder: (context, state) {
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: ConditionalBuilder(
+                  condition: ShopCubit.get(context).homeModel != null &&
+                      ShopCubit.get(context).catigoresModel != null,
+                  fallback: (context) {
+                    return Center(child: CircularProgressIndicator());
+                  },
+                  builder: (context) {
+                    return ProductBuilder(ShopCubit.get(context).homeModel!,
+                        ShopCubit.get(context).catigoresModel!, context, state);
+                  },
+                ),
               ),
-            ),
-          );
-        },
-        listener: ((context, state) {}));
+            );
+          },
+          listener: ((context, state) {})),
+    );
   }
 
   Widget ProductBuilder(
