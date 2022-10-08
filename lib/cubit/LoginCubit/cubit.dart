@@ -3,14 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/cubit/LoginCubit/states.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
 
 import 'package:my_app_shop/model/login_model.dart';
 import 'package:my_app_shop/shared/remote/dioHelper/dio_helper.dart';
 import 'package:simple_connection_checker/simple_connection_checker.dart';
 
 import '../../../shared/remote/endpoint.dart';
-import '../../components/components.dart';
 
 class ShopLoginCubit extends Cubit<ShopLoginState> {
   ShopLoginCubit() : super(ShopLoginInitialState());
@@ -33,14 +31,7 @@ class ShopLoginCubit extends Cubit<ShopLoginState> {
       data: {'email': email, 'password': password},
     ).then((value) {
       LoginModel = ShopLoginModel.fromJson(value.data);
-      ShopCubit()
-        ..getHomeData()
-        ..GetProductDetils()
-        ..getCatigoresData()
-        ..getFavoritsData()
-        ..getCartItem()
-        ..getAddressData()
-        ..GetOrderData();
+
       emit(ShopLoginSuccessState(LoginModel));
     }).catchError((Erorr) {
       print(Erorr.toString());

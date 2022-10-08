@@ -13,9 +13,10 @@ import 'package:my_app_shop/shared/remote/dioHelper/dio_helper.dart';
 import 'components/components.dart';
 import 'components/dark.dart';
 import 'cubit/LoginCubit/cubit.dart';
+import 'cubit/layoutCubit/cubit.dart';
 import 'cubit/onBoardingCubit/cubit.dart';
 import 'layout/Shop/Pages/Search/cubit/cubit.dart';
-import 'layout/Shop/cubit/cubit.dart';
+
 import 'layout/login/LoginScreen.dart';
 
 import 'layout/OnBoarding/onBoarding.dart';
@@ -55,8 +56,7 @@ class Main extends StatelessWidget {
       create: (context) => ShopCubit(),
       child: MultiBlocProvider(providers: [
         BlocProvider(create: (context) => OnboardingShopAppCubit()),
-        BlocProvider(
-            create: (context) => ShopLoginCubit()..InterNetConniction()),
+        BlocProvider(create: (context) => ShopLoginCubit()),
         BlocProvider(
             create: (context) => ShopCubit()
               ..getHomeData()
@@ -66,6 +66,7 @@ class Main extends StatelessWidget {
               ..getCartItem()
               ..getAddressData()
               ..GetOrderData()
+              ..GetProfileData()
               ..ChangeAppMode(fromShared: isDark)),
         BlocProvider(create: (context) => ShopRegisterCubit()),
         BlocProvider(create: (contex) => SearchCubit()..SearchProduct())

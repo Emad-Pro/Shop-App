@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/components/components.dart';
+import 'package:my_app_shop/cubit/layoutCubit/states.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Cateogries/Cateogries.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Favorites/Favorites.dart';
-import 'package:my_app_shop/layout/Shop/Pages/Orders/getOrder.dart';
-import 'package:my_app_shop/layout/Shop/Pages/Orders/getOrderDetils.dart';
+
 import 'package:my_app_shop/layout/Shop/Pages/Products/Products.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Search/Search.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Settings/Settings.dart';
 import 'package:my_app_shop/layout/Shop/Pages/home/Home.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+
 import 'package:my_app_shop/model/Catigores_model.dart';
 import 'package:my_app_shop/model/FavoritesPage_model.dart';
 import 'package:my_app_shop/model/ProductDetils_Model.dart';
-import 'package:my_app_shop/model/login_model.dart';
+
 import 'package:my_app_shop/shared/remote/dioHelper/dio_helper.dart';
 
 import '../../../model/Add_AddrssModel.dart';
@@ -28,10 +28,13 @@ import '../../../model/Get_AddressModel.dart';
 import '../../../model/Get_OrderDetils.dart';
 import '../../../model/Get_OrderModel.dart';
 import '../../../model/Home_model.dart';
+import '../../../model/Profile_model.dart';
 import '../../../model/UpdateItemCart.dart';
 import '../../../model/Update_AddressModel.dart';
+import '../../../model/Update_ProfileModel.dart';
 import '../../../shared/remote/SharedPreferences/CacheHelper.dart';
 import '../../../shared/remote/endpoint.dart';
+import '../../model/Change_PasswordModel.dart';
 
 class ShopCubit extends Cubit<Shopstates> {
   ShopCubit() : super(ShopInitialStates());
@@ -145,6 +148,7 @@ class ShopCubit extends Cubit<Shopstates> {
       } else {
         getCartItem();
       }
+      getCartItem();
       emit(ShopSuccessCartsDataState());
     }).catchError((onError) {
       if (cart![ProductId] == false) {
@@ -255,8 +259,6 @@ class ShopCubit extends Cubit<Shopstates> {
       "longitude": longitude,
     }).then((value) {
       addAdress = AddAdressModel.fromJson(value.data);
-      print(value.data);
-      getAddressData();
       emit(ShopSuccessAddAddress());
     }).catchError((onError) {
       print(onError.toString());
@@ -270,7 +272,6 @@ class ShopCubit extends Cubit<Shopstates> {
     DioHelper.getData(url: ADDADDRESS, token: token).then((value) {
       getAddressModel = GetAdressModel.fromJson(value!.data);
       //  print(value.data);
-
       emit(ShopSuccessGetAddress());
     }).catchError((onError) {
       print(onError.toString());
@@ -299,7 +300,6 @@ class ShopCubit extends Cubit<Shopstates> {
       "longitude": longitude,
     }).then((value) {
       updateAddress = UpdateAddressModel.fromJson(value.data);
-      print(value.data);
       getAddressData();
       emit(ShopSuccessUpdateAddress());
     }).catchError((onError) {
@@ -332,13 +332,11 @@ class ShopCubit extends Cubit<Shopstates> {
       'use_points': false,
     }).then((value) {
       addOrderModel = AddOrderModel.fromJson(value.data);
-      // getCartItem();
       GetOrderData();
-      //  print(value.data);
       emit(ShopSuccessOrderAdd());
     }).catchError((onError) {
       print(onError);
-      //emit(ShopErorrOrderAdd());
+      emit(ShopErorrOrderAdd());
     });
   }
 
@@ -353,6 +351,20 @@ class ShopCubit extends Cubit<Shopstates> {
     }).catchError((onError) {
       print(onError);
       emit(ShopErorrOrderGet());
+    });
+  }
+
+  ProfileDataModel? profileData;
+  void GetProfileData() {
+    emit(ShopLoadingProfileData());
+    DioHelper.getData(url: PROFILE, token: token).then((value) {
+      profileData = ProfileDataModel.fromJson(value!.data);
+
+      print(value.data);
+      emit(ShopSuccessProfileData());
+    }).catchError((onError) {
+      print(onError);
+      emit(ShopErorrProfileData());
     });
   }
 
@@ -403,5 +415,37 @@ class ShopCubit extends Cubit<Shopstates> {
         emit(DarkModeChange());
       });
     }
+  }
+
+  UpdatePrfileModel? updatePrfile;
+  void UpdateProfileData({String? name, dynamic phone, String? email}) {
+    emit(ShopLoadingProfileUpdate());
+    DioHelper.putData(url: UPDATEPROFILE, token: token, data: {
+      'name': name,
+      'phone': phone,
+      'email': email,
+    }).then((value) {
+      updatePrfile = UpdatePrfileModel.fromJson(value.data);
+      emit(ShopSuccessProfileUpdate());
+      print(value.data);
+    }).catchError((onError) {
+      print(onError.toString());
+      emit(ShopErorrProfileUpdate());
+    });
+  }
+
+  ChangePasswordModel? Changepassword;
+  void ChangePasswrod({String? CurrentlyPassword, String? NewPasswrod}) {
+    emit(ShopLoadingChangePassword());
+    DioHelper.postData(url: ChangePassword, token: token, data: {
+      'current_password': CurrentlyPassword,
+      'new_password': NewPasswrod
+    }).then((value) {
+      Changepassword = ChangePasswordModel.fromJson(value.data);
+      emit(ShopSuccessChangePassword());
+    }).catchError((onError) {
+      emit(ShopErorrChangePassword());
+      print(onError);
+    });
   }
 }

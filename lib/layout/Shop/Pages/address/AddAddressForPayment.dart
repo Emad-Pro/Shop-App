@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/components/components.dart';
 import 'package:my_app_shop/cubit/LoginCubit/cubit.dart';
 import 'package:my_app_shop/layout/Shop/Pages/address/address.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
 
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 import '../Cart/purchase.dart';
 
 class Addaddresspayment extends StatelessWidget {

@@ -5,9 +5,10 @@ import 'package:my_app_shop/layout/login/LoginScreen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../components/components.dart';
+import '../../cubit/layoutCubit/cubit.dart';
 import '../../cubit/onBoardingCubit/cubit.dart';
 import '../../cubit/onBoardingCubit/state.dart';
-import '../Shop/cubit/cubit.dart';
+
 import '../../shared/remote/SharedPreferences/CacheHelper.dart';
 
 class OnBoarding extends StatelessWidget {

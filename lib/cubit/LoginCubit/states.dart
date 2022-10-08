@@ -19,7 +19,3 @@ class ShopLoginErorrState extends ShopLoginState {
 class ShopLoginChangeOserctorAndIconState extends ShopLoginState {}
 
 class ShopLoginCheckInternet extends ShopLoginState {}
-
-class ShopUserDataProfileLoadingDataState extends ShopLoginState {}
-
-class ShopUserDataProfileErorrDataState extends ShopLoginState {}

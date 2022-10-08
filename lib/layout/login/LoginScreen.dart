@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:my_app_shop/layout/forgotPassword/ForgotPasswort_Screen.dart';
 import 'package:my_app_shop/layout/Shop/ShopLayout.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+
 import 'package:my_app_shop/shared/remote/SharedPreferences/CacheHelper.dart';
 
+import '../../cubit/layoutCubit/cubit.dart';
 import '../register/RegisterScreen.dart';
 import '../../components/components.dart';
 import '../../cubit/LoginCubit/cubit.dart';
@@ -22,16 +22,17 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<ShopLoginCubit, ShopLoginState>(
       listener: (context, state) {
         if (state is ShopLoginSuccessState) {
-          ShopCubit()
-            ..getHomeData()
-            ..GetProductDetils();
           if (state.LoginModel!.Status!.toString() == "true") {
             CacheHelper.saveData(
                     key: "token", value: state.LoginModel!.data!.token)
                 .then((value) {
               token = state.LoginModel!.data!.token;
-
+              print(token);
               NavigateToCantBack(context, ShopLayout());
+              ShopCubit.get(context).bottomScreen[0];
+              ShopCubit.get(context).currentIndex = 0;
+              StyledToastTest(state.LoginModel!.Message.toString(), context,
+                  ColorTostStates.success);
             });
           } else {
             StyledToastTest(state.LoginModel!.Message.toString(), context,

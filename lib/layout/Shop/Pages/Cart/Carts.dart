@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:input_quantity/input_quantity.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Cart/purchase.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
 
 import '../../../../components/components.dart';
-import '../Products/Products.dart';
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
+
 import '../Products/productDetils.dart';
 
 class Carts extends StatelessWidget {
@@ -89,7 +89,7 @@ class Carts extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "اجمالي المدفوع : ${ShopCubit.get(context).getCartItemModel!.data!.total} ج.م",
+                                      "اجمالي المدفوع : ${ShopCubit.get(context).getCartItemModel!.data!.total.round()} ج.م",
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
@@ -103,7 +103,7 @@ class Carts extends StatelessWidget {
                                 ),
                                 Spacer(),
                                 MaterialButton(
-                                  color: FlexColor.redDarkPrimary,
+                                  color: FlexColor.redWineDarkPrimary,
                                   elevation: 0,
                                   minWidth: 200,
                                   padding: EdgeInsets.symmetric(vertical: 15),
@@ -139,11 +139,12 @@ class Carts extends StatelessWidget {
           children: [
             Stack(
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
-                Image(
-                  width: 200,
-                  height: 200,
-                  image: NetworkImage(model.image.toString()),
+                Center(
+                  child: Image(
+                    width: 150,
+                    height: 150,
+                    image: NetworkImage(model.image.toString()),
+                  ),
                 ),
                 if (model.discount != 0)
                   Banner(

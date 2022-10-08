@@ -3,9 +3,9 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/components/components.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
 
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 import 'AddAddress.dart';
 import 'UpdateAddress.dart';
 
@@ -16,9 +16,6 @@ class Address extends StatelessWidget {
     return BlocProvider(
         create: (context) => ShopCubit()..getAddressData(),
         child: BlocConsumer<ShopCubit, Shopstates>(listener: (context, state) {
-          if (state is ShopSuccessAddAddress) {
-            ShopCubit()..getAddressData();
-          }
           if (state is ShopSuccessDeleteAddress) {
             StyledToastTest(
                 ShopCubit.get(context).deleteAdressModel!.message.toString(),

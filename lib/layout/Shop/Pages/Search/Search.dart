@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Search/cubit/cubit.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Search/cubit/state.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
+
 import 'package:my_app_shop/model/FavoritesPage_model.dart';
 
-import '../../cubit/states.dart';
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 import '../Favorites/Favorites.dart';
 import 'cubit/cubit.dart';
 
@@ -35,7 +36,7 @@ class Search extends StatelessWidget {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: Color.fromARGB(255, 74, 20, 140)),
+                          BorderSide(color: FlexColor.redWineDarkPrimary),
                     ),
                   ),
                   onFieldSubmitted: (String? value) {
@@ -49,7 +50,7 @@ class Search extends StatelessWidget {
                   Expanded(
                     child: ListView.separated(
                         itemBuilder: (context, index) {
-                          return BuildFavItem(
+                          return BuildSearchItem(
                               SearchCubit.get(context)
                                   .searchModel!
                                   .data!
@@ -67,10 +68,11 @@ class Search extends StatelessWidget {
                           );
                         },
                         itemCount: SearchCubit.get(context)
-                            .searchModel!
-                            .data!
-                            .data!
-                            .length),
+                                .searchModel!
+                                .data!
+                                .data!
+                                .length -
+                            1),
                   ),
               ],
             ),
@@ -80,7 +82,7 @@ class Search extends StatelessWidget {
     );
   }
 
-  Widget BuildFavItem(model, context, index, Productmodel) =>
+  Widget BuildSearchItem(model, context, index, Productmodel) =>
       BlocConsumer<ShopCubit, Shopstates>(
           listener: (BuildContext context, state) {},
           builder: (BuildContext context, Object? state) {

@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/components/components.dart';
 import 'package:my_app_shop/cubit/LoginCubit/cubit.dart';
 import 'package:my_app_shop/layout/Shop/Pages/address/address.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 
 class Addaddress extends StatelessWidget {
   Addaddress({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class Addaddress extends StatelessWidget {
             if (state is ShopSuccessAddAddress) {
               StyledToastTest('${ShopCubit.get(context).addAdress!.message}',
                   context, ColorTostStates.success);
+
               nameController.clear();
               cityController.clear();
               regionController.clear();

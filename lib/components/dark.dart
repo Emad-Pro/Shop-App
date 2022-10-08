@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' show Color, Colors;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+
+import '../cubit/layoutCubit/cubit.dart';
+import '../cubit/layoutCubit/states.dart';
 
 class colorsNewApp {
   Color white = Colors.white;

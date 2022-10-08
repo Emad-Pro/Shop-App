@@ -6,10 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/components/components.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Cart/DonePurchese.dart';
 
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 
-import '../address/AddAddress.dart';
 import '../address/AddAddressForPayment.dart';
 
 class Purchase extends StatelessWidget {

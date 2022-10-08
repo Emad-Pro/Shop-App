@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Orders/getOrder.dart';
 import 'package:my_app_shop/layout/Shop/Pages/Orders/getOrderDetils.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
 
 import '../../../../components/components.dart';
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 
 class DonePurchese extends StatelessWidget {
   final dynamic idAddress;

@@ -1,16 +1,13 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:emoji_alert/arrays.dart';
 import 'package:emoji_alert/emoji_icon.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:my_app_shop/model/FavoritesPage_model.dart';
 
 import '../../../../components/components.dart';
-import '../../cubit/cubit.dart';
-import '../../cubit/states.dart';
-import '../Products/productDetils.dart';
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 
 class Favorites extends StatelessWidget {
   const Favorites({Key? key}) : super(key: key);
@@ -82,102 +79,4 @@ class Favorites extends StatelessWidget {
           }),
     );
   }
-
-  Widget BuildFavItem(model, context, index) => GestureDetector(
-        onTap: () {
-          NavigateTo(
-              context,
-              ProductDetils(
-                id: model.id,
-              ));
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: FlexColor.redWineDarkPrimary),
-          child: Row(children: [
-            Stack(children: [
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                maxRadius: 25,
-                backgroundImage: NetworkImage(scale: 2, '${model.image}'),
-              ),
-              if (model.discount != 0)
-                Banner(
-                    message: 'خصم حتي ${model.discount} %',
-                    location: BannerLocation.topStart),
-            ]),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 250,
-                    child: Text(
-                      "${model.name!}",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                    ),
-                  ),
-                  model.price != model.oldPrice
-                      ? Row(
-                          children: [
-                            Text("السعر :${model.price}"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "${model.oldPrice}",
-                              style: TextStyle(
-                                  decoration: TextDecoration.lineThrough),
-                            )
-                          ],
-                        )
-                      : Text(" السعر :${model.price}"),
-                  SizedBox(
-                    width: 10,
-                  )
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                CircleAvatar(
-                  backgroundColor: FlexColor.redWineDarkPrimary,
-                  child: IconButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: () {
-                        ShopCubit.get(context).changeFAVORITES(model.id);
-                      },
-                      icon: Icon(
-                        Icons.favorite,
-                        color: ShopCubit.get(context).favo![model.id]!
-                            ? Colors.white
-                            : Colors.black,
-                      )),
-                ),
-                CircleAvatar(
-                  backgroundColor: FlexColor.redWineDarkPrimary,
-                  child: IconButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: () {
-                        ShopCubit.get(context).AddRemoveCart(model.id);
-                      },
-                      icon: Icon(
-                        Icons.shopping_cart,
-                        color: ShopCubit.get(context).cart![model.id]!
-                            ? Colors.white
-                            : Colors.black,
-                      )),
-                ),
-              ],
-            )
-          ]),
-        ),
-      );
 }

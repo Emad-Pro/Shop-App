@@ -12,3 +12,4 @@ const CHANGECART = 'carts/';
 const PLUSmINUITEM = 'carts';
 const ADDADDRESS = 'addresses';
 const ORDERS = 'orders';
+const ChangePassword = 'change-password';

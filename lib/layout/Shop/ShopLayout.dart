@@ -3,98 +3,116 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/cubit/LoginCubit/cubit.dart';
+import 'package:my_app_shop/cubit/LoginCubit/states.dart';
 
 import 'package:my_app_shop/layout/login/LoginScreen.dart';
 import 'package:my_app_shop/shared/remote/SharedPreferences/CacheHelper.dart';
 
 import '../../components/components.dart';
+import '../../cubit/layoutCubit/cubit.dart';
+import '../../cubit/layoutCubit/states.dart';
 import '../../model/GetCartItem.dart';
 import '../../model/login_model.dart';
 import 'Pages/Cart/Carts.dart';
 import 'Pages/Orders/getOrder.dart';
-import 'cubit/cubit.dart';
-import 'cubit/states.dart';
 
 class ShopLayout extends StatelessWidget {
   const ShopLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, Shopstates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              BtnPushClick(context, Carts());
-            },
-            child: Icon(Icons.shopping_bag_rounded),
-          ),
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    BtnPushClick(context, getOrders());
-                  },
-                  icon: Icon(
-                    Icons.delivery_dining,
-                  )),
-              IconButton(
-                onPressed: () {
-                  ShopCubit.get(context).ChangeAppMode();
-                },
-                icon: Icon(Icons.dark_mode),
-              ),
-            ],
-            title: Text(
-              "مرحباً ",
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ShopLoginCubit, ShopLoginState>(
+          listener: (context, state) {
+            if (state is ShopLoginSuccessState) {
+              ShopCubit()..GetProfileData();
+            }
+          },
+        ),
+      ],
+      child: BlocConsumer<ShopCubit, Shopstates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                BtnPushClick(context, Carts());
+              },
+              child: Icon(Icons.shopping_bag_rounded),
             ),
-          ),
-          body: ShopCubit.get(context)
-              .bottomScreen[ShopCubit.get(context).currentIndex],
-          bottomNavigationBar: CurvedNavigationBar(
-            color: FlexColor.redWineDarkPrimary,
-            backgroundColor:
-                ShopCubit.get(context).isDark ? Colors.black : Colors.white,
-            height: 45,
-            items: [
-              Icon(
-                Icons.home_filled,
-                color:
-                    ShopCubit.get(context).isDark ? Colors.black : Colors.white,
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      BtnPushClick(context, getOrders());
+                    },
+                    icon: Icon(
+                      Icons.delivery_dining,
+                    )),
+                IconButton(
+                  onPressed: () {
+                    ShopCubit.get(context).ChangeAppMode();
+                  },
+                  icon: Icon(Icons.dark_mode),
+                ),
+              ],
+              title: Text(
+                "Shop EA",
               ),
-              Icon(
-                Icons.shopping_bag,
-                color:
-                    ShopCubit.get(context).isDark ? Colors.black : Colors.white,
-              ),
-              Icon(
-                Icons.favorite,
-                color:
-                    ShopCubit.get(context).isDark ? Colors.black : Colors.white,
-              ),
-              Icon(
-                Icons.category_outlined,
-                color:
-                    ShopCubit.get(context).isDark ? Colors.black : Colors.white,
-              ),
-              Icon(
-                Icons.search,
-                color:
-                    ShopCubit.get(context).isDark ? Colors.black : Colors.white,
-              ),
-              Icon(
-                Icons.settings,
-                color:
-                    ShopCubit.get(context).isDark ? Colors.black : Colors.white,
-              ),
-            ],
-            onTap: (index) {
-              ShopCubit.get(context).changeBottomScreen(index);
-            },
-          ),
-        );
-      },
+            ),
+            body: ShopCubit.get(context)
+                .bottomScreen[ShopCubit.get(context).currentIndex],
+            bottomNavigationBar: CurvedNavigationBar(
+              color: FlexColor.redWineDarkPrimary,
+              backgroundColor:
+                  ShopCubit.get(context).isDark ? Colors.black : Colors.white,
+              height: 45,
+              items: [
+                Icon(
+                  Icons.home_filled,
+                  color: ShopCubit.get(context).isDark
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                Icon(
+                  Icons.shopping_bag,
+                  color: ShopCubit.get(context).isDark
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                Icon(
+                  Icons.favorite,
+                  color: ShopCubit.get(context).isDark
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                Icon(
+                  Icons.category_outlined,
+                  color: ShopCubit.get(context).isDark
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                Icon(
+                  Icons.search,
+                  color: ShopCubit.get(context).isDark
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                Icon(
+                  Icons.settings,
+                  color: ShopCubit.get(context).isDark
+                      ? Colors.black
+                      : Colors.white,
+                ),
+              ],
+              onTap: (index) {
+                ShopCubit.get(context).changeBottomScreen(index);
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

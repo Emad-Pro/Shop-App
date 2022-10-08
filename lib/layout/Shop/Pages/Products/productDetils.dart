@@ -4,11 +4,12 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../components/components.dart';
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 import '../../ShopLayout.dart';
 
 class ProductDetils extends StatelessWidget {
@@ -24,7 +25,6 @@ class ProductDetils extends StatelessWidget {
           builder: (context, state) {
             return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.black,
                   title: state is ShopLoadingGetProductDetilsState ||
                           ShopCubit.get(context).getProductDetilsModel == null
                       ? Container()
@@ -157,7 +157,6 @@ class ProductDetils extends StatelessWidget {
                             ),
                             Container(
                                 padding: EdgeInsets.all(5),
-                                color: HexColor("121212"),
                                 child: Row(
                                   children: [
                                     MaterialButton(

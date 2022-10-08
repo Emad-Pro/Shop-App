@@ -125,6 +125,24 @@ class ShopSuccessOrderCancel extends Shopstates {}
 
 class ShopErorrOrderCancel extends Shopstates {}
 
+class ShopLoadingProfileData extends Shopstates {}
+
+class ShopSuccessProfileData extends Shopstates {}
+
+class ShopErorrProfileData extends Shopstates {}
+
+class ShopLoadingProfileUpdate extends Shopstates {}
+
+class ShopSuccessProfileUpdate extends Shopstates {}
+
+class ShopErorrProfileUpdate extends Shopstates {}
+
+class ShopLoadingChangePassword extends Shopstates {}
+
+class ShopSuccessChangePassword extends Shopstates {}
+
+class ShopErorrChangePassword extends Shopstates {}
+
 class paymentstate extends Shopstates {}
 
 class DarkModeChange extends Shopstates {}

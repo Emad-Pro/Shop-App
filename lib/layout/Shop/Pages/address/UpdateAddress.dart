@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app_shop/components/components.dart';
 import 'package:my_app_shop/cubit/LoginCubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/cubit.dart';
-import 'package:my_app_shop/layout/Shop/cubit/states.dart';
+
+import '../../../../cubit/layoutCubit/cubit.dart';
+import '../../../../cubit/layoutCubit/states.dart';
 
 class UpdateAddress extends StatelessWidget {
   final int? id;
@@ -21,9 +22,7 @@ class UpdateAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple[900],
-        ),
+        appBar: AppBar(),
         body: BlocConsumer<ShopCubit, Shopstates>(listener: (context, state) {
           if (state is ShopSuccessUpdateAddress) {
             StyledToastTest('${ShopCubit.get(context).updateAddress!.message}',
@@ -67,7 +66,7 @@ class UpdateAddress extends StatelessWidget {
                         decoration: InputDecoration(hintText: "الاسم"),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       TextFormField(
                         validator: (value) {
@@ -80,7 +79,7 @@ class UpdateAddress extends StatelessWidget {
                         decoration: InputDecoration(hintText: "المدينة"),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       TextFormField(
                         validator: (value) {
@@ -93,7 +92,7 @@ class UpdateAddress extends StatelessWidget {
                         decoration: InputDecoration(hintText: "المنطقة"),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       TextFormField(
                         validator: (value) {
@@ -106,7 +105,7 @@ class UpdateAddress extends StatelessWidget {
                         decoration: InputDecoration(hintText: "تفاصيل"),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       TextFormField(
                         validator: (value) {
@@ -119,7 +118,7 @@ class UpdateAddress extends StatelessWidget {
                         decoration: InputDecoration(hintText: "ملحوظات"),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.numberWithOptions(
@@ -134,7 +133,7 @@ class UpdateAddress extends StatelessWidget {
                         decoration: InputDecoration(hintText: "خط الطول"),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
